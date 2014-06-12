@@ -1,0 +1,14 @@
+{application, http_gateway,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  ranch,
+                  cowboy
+                 ]},
+  {mod, { http_gateway_app, []}},
+  {env, []}
+ ]}.
