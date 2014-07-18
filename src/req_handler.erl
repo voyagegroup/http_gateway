@@ -2,6 +2,8 @@
 
 -export([getdata/1, postdata/1]).
 
+-define(POST_SIZE, 160000).
+
 getdata(Req) ->
     case cowboy_req:method(Req) of
         {<<"GET">>, _} ->
@@ -13,7 +15,7 @@ getdata(Req) ->
 postdata(Req) ->
     case cowboy_req:method(Req) of
         {<<"POST">>, _} ->
-            {ok, Qs, _} = cowboy_req:body_qs(Req),
+            {ok, Qs, _} = cowboy_req:body_qs(Req, [{length, ?POST_SIZE}]),
             Qs;
         _ -> no_postdata
     end.
