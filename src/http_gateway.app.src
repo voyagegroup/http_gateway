@@ -9,6 +9,7 @@
                   ranch,
                   cowboy
                  ]},
+  {modules, [ http_gateway_app, http_gateway_sup, req_handler, route_handler ]},
   {mod, { http_gateway_app, []}},
   {env, []}
  ]}.

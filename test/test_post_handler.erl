@@ -17,9 +17,9 @@ handle(Req, State) ->
 	{ok, Req3, State}.
 
 maybe_echo(<<"POST">>, true, Req) ->
-	{ok, PostVals, Req2} = cowboy_req:body_qs(Req),
+    PostVals = req_handler:postdata(Req),
 	Echo = proplists:get_value(<<"echo">>, PostVals),
-	echo(Echo, Req2);
+	echo(Echo, Req);
 maybe_echo(<<"POST">>, false, Req) ->
 	cowboy_req:reply(400, [], <<"Missing body.">>, Req);
 maybe_echo(_, _, Req) ->
