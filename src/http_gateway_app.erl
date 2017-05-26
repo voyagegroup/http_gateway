@@ -26,13 +26,20 @@ start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
           {'_', get_routes()}
     ]),
-    cowboy:start_http(http, 100, [{port, get_port()}], [
+    cowboy:start_http(get_name(), 100, [{port, get_port()}], [
           {env, [{dispatch, Dispatch}]}
     ]),
     http_gateway_sup:start_link().
 
 stop(_State) ->
+    cowboy:stop_listener(get_name()),
     ok.
+
+get_name() ->
+    case application:get_env(?APP_NAME, name) of
+        {ok, Name} -> Name;
+        _ -> http
+    end.
 
 get_routes() ->
     case application:get_env(?APP_NAME, routes) of
