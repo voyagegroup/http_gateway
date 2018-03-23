@@ -1,7 +1,8 @@
+http_gateway
+=====
 
-# http_gateway
-
-## license
+License
+-----
 
 MIT LICENSE
 (see LICENSE.txt)
