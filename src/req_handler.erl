@@ -6,16 +6,16 @@
 
 getdata(Req) ->
     case cowboy_req:method(Req) of
-        {<<"GET">>, _} ->
-            {Qs, _} = cowboy_req:qs_vals(Req),
+        <<"GET">> ->
+            {Qs, _} = cowboy_req:parse_qs(Req),
             Qs;
         _ -> no_getdata
     end.
 
 postdata(Req) ->
     case cowboy_req:method(Req) of
-        {<<"POST">>, _} ->
-            {ok, Qs, _} = cowboy_req:body_qs(Req, [{length, ?POST_SIZE}]),
+        <<"POST">> ->
+            {ok, Qs, _} = cowboy_req:read_urlencoded_body(Req, #{length => ?POST_SIZE}),
             Qs;
         _ -> no_postdata
     end.

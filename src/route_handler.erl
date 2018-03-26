@@ -6,14 +6,14 @@
 
 init(_Transport, Req, []) ->
     {ok, Req, undefined}.
- 
+
 handle(Req, State, F) ->
     Res = F(Req),
-    {ok, Req2} = make_reply(Res, Req),
+    Req2 = make_reply(Res, Req),
     {ok, Req2, State}.
 
 make_reply(Body, Req) ->
-  Headers = [{<<"content-type">>, <<"text/plain">>}],
+  Headers = #{<<"content-type">> => <<"text/plain">>},
   cowboy_req:reply(200, Headers, Body, Req).
 
 terminate(_Reason, _Req, _State) ->
