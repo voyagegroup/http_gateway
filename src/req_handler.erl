@@ -7,7 +7,8 @@
 getdata(Req) ->
     case cowboy_req:method(Req) of
         <<"GET">> ->
-            cowboy_req:parse_qs(Req);
+            Qs = cowboy_req:parse_qs(Req),
+            Qs;
         _ -> no_getdata
     end.
 
