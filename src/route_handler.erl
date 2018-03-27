@@ -1,11 +1,11 @@
 -module(route_handler).
 
--export([init/3]).
+-export([init/2]).
 -export([handle/3]).
 -export([terminate/3]).
 
-init(_Transport, Req, []) ->
-    {ok, Req, undefined}.
+init(Req, State) ->
+    {ok, Req, State}.
 
 handle(Req, State, F) ->
     Res = F(Req),
@@ -13,8 +13,8 @@ handle(Req, State, F) ->
     {ok, Req2, State}.
 
 make_reply(Body, Req) ->
-  Headers = #{<<"content-type">> => <<"text/plain">>},
-  cowboy_req:reply(200, Headers, Body, Req).
+    Headers = #{<<"content-type">> => <<"text/plain">>},
+    cowboy_req:reply(200, Headers, Body, Req).
 
 terminate(_Reason, _Req, _State) ->
-	  ok.
+    ok.
