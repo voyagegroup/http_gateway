@@ -25,7 +25,7 @@ start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
           {'_', get_routes()}
     ]),
-    cowboy:start_clear(http, 100, [{port, get_port()}], #{
+    cowboy:start_clear(http, [{port, get_port()}], #{
           env => #{dispatch => Dispatch}
     }),
     http_gateway_sup:start_link().
