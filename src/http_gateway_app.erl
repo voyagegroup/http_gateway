@@ -41,7 +41,7 @@ stop(_State) ->
 get_routes() ->
     case application:get_env(?APP_NAME, routes) of
         {ok, Routes} -> Routes;
-        _ -> []
+        _ -> [{"/", route_handler, []}]
     end.
 
 get_port() ->
