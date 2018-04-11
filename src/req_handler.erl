@@ -2,7 +2,8 @@
 
 -export([getdata/1, postdata/1]).
 
--define(POST_SIZE, 160000).
+-define(APP_NAME, http_gateway).
+-define(POST_SIZE, 320000).
 
 getdata(Req) ->
     case cowboy_req:method(Req) of
@@ -15,7 +16,13 @@ getdata(Req) ->
 postdata(Req) ->
     case cowboy_req:method(Req) of
         <<"POST">> ->
-            {ok, Qs, _} = cowboy_req:read_urlencoded_body(Req, #{length => ?POST_SIZE}),
+            {ok, Qs, _} = cowboy_req:read_urlencoded_body(Req, #{length => get_postsize()}),
             Qs;
         _ -> no_postdata
+    end.
+
+get_postsize() ->
+    case application:get_env(?APP_NAME, postsize) of
+        {ok, Postsize} -> Postsize;
+        _ -> ?POST_SIZE
     end.
