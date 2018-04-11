@@ -2,7 +2,7 @@
 
 -export([getdata/1, postdata/1]).
 
--define(POST_SIZE, 160000).
+-define(POST_SIZE, 320000).
 
 getdata(Req) ->
     case cowboy_req:method(Req) of
