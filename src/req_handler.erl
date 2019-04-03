@@ -1,21 +1,33 @@
 -module(req_handler).
 
--export([getdata/1, postdata/1]).
+-export([getdata/1, postdata/1, header/2]).
 
--define(POST_SIZE, 160000).
+-define(APP_NAME, http_gateway).
+-define(POST_SIZE, 320000).
 
 getdata(Req) ->
     case cowboy_req:method(Req) of
-        {<<"GET">>, _} ->
-            {Qs, _} = cowboy_req:qs_vals(Req),
+        <<"GET">> ->
+            Qs = cowboy_req:parse_qs(Req),
             Qs;
         _ -> no_getdata
     end.
 
 postdata(Req) ->
     case cowboy_req:method(Req) of
-        {<<"POST">>, _} ->
-            {ok, Qs, _} = cowboy_req:body_qs(Req, [{length, ?POST_SIZE}]),
+        <<"POST">> ->
+            {ok, Qs, _} = cowboy_req:read_urlencoded_body(Req, #{length => get_postsize()}),
             Qs;
         _ -> no_postdata
     end.
+
+get_postsize() ->
+    case application:get_env(?APP_NAME, postsize) of
+        {ok, Postsize} -> Postsize;
+        _ -> ?POST_SIZE
+    end.
+
+-spec header(binary(), cowboy_req:req()) -> binary() | undefined.
+header(Name, Req) ->
+    cowboy_req:header(Name, Req).
+

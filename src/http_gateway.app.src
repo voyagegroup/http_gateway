@@ -1,14 +1,18 @@
 {application, http_gateway,
- [
-  {description, ""},
-  {vsn, "1"},
+ [{description, ""},
+  {vsn, "0.1.0"},
   {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib,
-                  ranch,
-                  cowboy
-                 ]},
   {mod, { http_gateway_app, []}},
-  {env, []}
+  {applications,
+   [
+    kernel,
+    stdlib,
+    cowboy
+   ]},
+  {env, []},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["MIT"]},
+  {links, []}
  ]}.
