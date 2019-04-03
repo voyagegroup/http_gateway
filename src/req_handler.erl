@@ -1,6 +1,6 @@
 -module(req_handler).
 
--export([getdata/1, postdata/1]).
+-export([getdata/1, postdata/1, header/2]).
 
 -define(APP_NAME, http_gateway).
 -define(POST_SIZE, 320000).
@@ -26,3 +26,8 @@ get_postsize() ->
         {ok, Postsize} -> Postsize;
         _ -> ?POST_SIZE
     end.
+
+-spec header(binary(), cowboy_req:req()) -> binary() | undefined.
+header(Name, Req) ->
+    cowboy_req:header(Name, Req).
+
