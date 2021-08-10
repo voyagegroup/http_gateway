@@ -13,6 +13,7 @@
 
 -define(APP_NAME, http_gateway).
 -define(DEFAULT_PORT, 8887).
+-define(DEFAULT_MAX_KEEPALIVE, 1000).
 
 %%====================================================================
 %% API
@@ -26,7 +27,8 @@ start(_StartType, _StartArgs) ->
           {'_', get_routes()}
     ]),
     cowboy:start_clear(http, [{port, get_port()}], #{
-          env => #{dispatch => Dispatch}
+          env => #{dispatch => Dispatch},
+          max_keepalive => get_max_keepalive()
     }),
     http_gateway_sup:start_link().
 
@@ -48,4 +50,10 @@ get_port() ->
     case application:get_env(?APP_NAME, port) of
         {ok, Port} -> Port;
         _ -> ?DEFAULT_PORT
+    end.
+
+get_max_keepalive() ->
+    case application:get_env(?APP_NAME, max_keepalive) of
+        {ok, MaxKeepAlive} -> MaxKeepAlive;
+        _ -> ?DEFAULT_MAX_KEEPALIVE
     end.
