@@ -7,7 +7,8 @@
    [
     kernel,
     stdlib,
-    cowboy
+    cowboy,
+    opentelemetry_api
    ]},
   {env, []},
   {modules, []},
