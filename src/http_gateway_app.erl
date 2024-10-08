@@ -14,6 +14,8 @@
 -define(APP_NAME, http_gateway).
 -define(DEFAULT_PORT, 8887).
 
+-include_lib("opentelemetry_api/include/otel_tracer.hrl").
+
 %%====================================================================
 %% API
 %%====================================================================
@@ -26,7 +28,8 @@ start(_StartType, _StartArgs) ->
           {'_', get_routes()}
     ]),
     cowboy:start_clear(http, [{port, get_port()}], #{
-          env => #{dispatch => Dispatch}
+          env => #{dispatch => Dispatch},
+          stream_handlers => [cowboy_telemetry_h, cowboy_stream_h]
     }),
     http_gateway_sup:start_link().
 
