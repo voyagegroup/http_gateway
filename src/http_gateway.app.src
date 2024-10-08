@@ -8,7 +8,8 @@
     kernel,
     stdlib,
     cowboy,
-    opentelemetry_api
+    opentelemetry_api,
+    opentelemetry_cowboy
    ]},
   {env, []},
   {modules, []},
